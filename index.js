@@ -10,7 +10,7 @@ app.use(cors())
 app.use(express.json())
 
 
-mongoose.connect(`mongodb://127.0.0.1:27017/portfolio`).then(()=>{
+mongoose.connect(`mongodb+srv://sumit:2146255sb8@cluster0.ur0yc.mongodb.net/portfolio`).then(()=>{
     console.log('Database connected!')
 }).catch((e)=>{
     console.log("Error in connecting db",e);
