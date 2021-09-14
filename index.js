@@ -5,7 +5,9 @@ const http = require("http");
 const app = express()
 const mongoose = require('mongoose')
 const Author = require('./models/Author')
-
+const nodemailer = require('nodemailer')
+const { check, validationResult }
+    = require('express-validator');
 app.use(cors())
 app.use(express.json())
 
@@ -53,6 +55,45 @@ app.put(`/data/:id`,async (req,res)=>{
     }).catch((e)=>{
         console.log(e)
     })
+})
+.post('/contact',check('email','Invalid Email').isEmail(),async (req,res)=>{
+    const {email,message,name} = req.body;
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(200).send({error:errors.errors[0].msg});
+    }
+
+    let transporter = nodemailer.createTransport({
+        service:'gmail',
+        auth: {
+            user:'reactgraminfo@gmail.com',
+            pass: '2146255$b8'
+        }
+    });
+
+    const mailOptions = {
+        from: 'reactgraminfo@gmail.com', // sender address
+        to: 'sb78639@gmail.com', // list of receivers
+        subject: `Portfolio Message`, // Subject line
+        html: `<div style="width:90%;padding:15px;box-shadow:10px 10px 10px 0 rgba(0,0,0,.115)">
+        <h1>Portfolio Message</h1>
+        <h3>${name}</h3>
+        <p>${message}</p>
+        <p>-by email: ${email}
+        </div>`
+        
+        // plain text body
+      };
+
+      transporter.sendMail(mailOptions,(err,info)=>{
+        if(err){
+            return res.status(500).send({error:"Error in Sending Message,Try Again!"})
+        }
+        res.status(200).send({message:"Thanks for Contacting! I will respond you shortly."})
+
+     })
+   
+    
 })
 
 io.on("connection",(socket) =>{
