@@ -48,7 +48,7 @@ app.put(`/data/:id`,async (req,res)=>{
     
 
     Author.updateOne({_id:id},{name:name,color:color,image:image}).then(()=>{
-        io.emit("data",{name,color})
+        io.emit("data",{name,color,image})
         return res.status(200).send({message:"Data added!"})
     }).catch((e)=>{
         console.log(e)
