@@ -29,6 +29,14 @@ const author_schema = new Schema({
     color:{
         type:"String",
         default:"#F3BE36"
+    },
+    role:{
+        type:"String",
+        default:"Full Stack Developer"
+    },
+    subheading:{
+        type:"String",
+        default:"I’m Full Stack Web Developer in Mern Stack Love to Develope MERN Satck Web Applications"
     }
 })
 
