@@ -27,13 +27,13 @@ app.get("/data",async (req,res)=>{
     const data = await Author.find()
     return res.status(200).send({data:data[0]})
 })
-app.post("/data/:id",async (req,res)=>{
-    const {name,color,id} = req.body;
+app.post("/data",async (req,res)=>{
+    const {name,color,image} = req.body;
     var io = req.app.get('socketio');
   
 
     new Author({
-        name,color
+        name,color,image
     }).save().then(()=>{
         io.emit("data",{name,color})
         return res.status(200).send({message:"Data added!"})
@@ -42,12 +42,12 @@ app.post("/data/:id",async (req,res)=>{
 })
 
 app.put(`/data/:id`,async (req,res)=>{
-    const {name,color} = req.body;
+    const {name,color,image} = req.body;
     const {id} = req.params;
     var io = req.app.get('socketio');
     
 
-    Author.updateOne({_id:id},{name:name,color:color}).then(()=>{
+    Author.updateOne({_id:id},{name:name,color:color,image:image}).then(()=>{
         io.emit("data",{name,color})
         return res.status(200).send({message:"Data added!"})
     }).catch((e)=>{

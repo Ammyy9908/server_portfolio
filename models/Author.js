@@ -6,6 +6,10 @@ const author_schema = new Schema({
         type:"String",
         default:"Sumit"
     },
+    image:{
+        type:"String",
+        default:"https://sumitkumar.vercel.app/static/media/avatar.6d663021.jpeg"
+    },
     works:{
         type:"Array",
         default:[]
