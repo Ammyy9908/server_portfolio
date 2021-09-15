@@ -10,6 +10,7 @@ const { check, validationResult }
     = require('express-validator');
 app.use(cors())
 app.use(express.json())
+app.use(express.static('public'));
 
 
 mongoose.connect(`mongodb+srv://sumit:2146255sb8@cluster0.ur0yc.mongodb.net/portfolio`).then(()=>{
@@ -94,6 +95,11 @@ app.put(`/data/:id`,async (req,res)=>{
      })
    
     
+})
+
+app.get('/resume',async (req,res)=>{
+    const file = `${__dirname}/public/resume.pdf`;
+    res.sendFile(file)
 })
 
 io.on("connection",(socket) =>{
