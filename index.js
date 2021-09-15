@@ -102,6 +102,23 @@ app.get('/resume',async (req,res)=>{
     res.sendFile(file)
 })
 
+app.post('/work/:id',async (req,res)=>{
+
+    const author = await Author.findOne({_id:req.params.id});
+    var io = req.app.get('socketio');
+    const work = [...author.works,req.body.work];
+
+    Author.updateOne({_id:req.params.id},{works:work}).then(()=>{
+        io.emit("work",req.body.work)
+        return res.status(200).send({message:"Work added!"})
+    })
+})
+
+app.get('/works',async (req,res)=>{
+    const author = await Author.find()
+    res.status(200).send({works:author[0].works})
+})
+
 io.on("connection",(socket) =>{
 
     console.log("Client connected!")

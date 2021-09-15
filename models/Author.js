@@ -11,7 +11,7 @@ const author_schema = new Schema({
         default:"https://sumitkumar.vercel.app/static/media/avatar.6d663021.jpeg"
     },
     works:{
-        type:"Array",
+        type:"Object",
         default:[]
     },
     education:{
